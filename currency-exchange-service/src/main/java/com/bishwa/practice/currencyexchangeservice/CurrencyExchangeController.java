@@ -35,8 +35,11 @@ public class CurrencyExchangeController {
             throw new RuntimeException("Unable to find data for " + from + " to" + to);
         }
 
-        String port = environment.getProperty("local.server.port");
-        currencyExchange.setEnvironment(port);
+        final String port = environment.getProperty("local.server.port");
+        final var host = environment.getProperty("HOSTNAME");
+        final var version = "v11";
+
+        currencyExchange.setEnvironment(port + " " + version + " " + host);
         return currencyExchange;
     }
 

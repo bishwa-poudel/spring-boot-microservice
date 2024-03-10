@@ -1,5 +1,7 @@
 package com.bishwa.practice.currencyconversionservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,8 @@ import java.util.HashMap;
  */
 @RestController
 public class CurrencyConversionController {
+    private final Logger logger = LoggerFactory.getLogger(CurrencyConversion.class);
+
     @Autowired
     private CurrencyExchangeProxy proxy;
 
@@ -25,6 +29,7 @@ public class CurrencyConversionController {
 
     @GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversion(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
+        logger.info("calculteCurrencyConversion called with {} to {} with {}", from, to, quantity);
         var uriVariables = new HashMap<String, String>();
         uriVariables.put("from", from);
         uriVariables.put("to", to);
@@ -45,6 +50,8 @@ public class CurrencyConversionController {
 
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversionFeign(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
+        logger.info("calculteCurrencyConversion called with {} to {} with {}", from, to, quantity);
+
         var currencyConversion = proxy.retrieverExchangeValue(from, to);
 
         return new CurrencyConversion(currencyConversion.getId(),
