@@ -37,7 +37,7 @@ public class CurrencyExchangeController {
 
         final String port = environment.getProperty("local.server.port");
         final var host = environment.getProperty("HOSTNAME");
-        final var version = "v11";
+        final var version = "v12";
 
         currencyExchange.setEnvironment(port + " " + version + " " + host);
         return currencyExchange;
